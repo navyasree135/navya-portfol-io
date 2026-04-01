@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    --background: 222.2 47.4% 11.2%;
+    --foreground: 214.3 31.8% 91.4%;
+    --card: 222.2 47.4% 11.2%;
+    --card-foreground: 214.3 31.8% 91.4%;
+    --popover: 222.2 47.4% 11.2%;
+    --popover-foreground: 214.3 31.8% 91.4%;
+    --primary: 198.4 93.2% 59.6%;
+    --primary-foreground: 222.2 47.4% 11.2%; /* deep dark for primary text */
+    --secondary: 224.3 64.3% 32.9%;
+    --secondary-foreground: 214.3 31.8% 91.4%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 258.3 89.5% 66.1%;
+    --accent-foreground: 214.3 31.8% 91.4%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 0 0% 100% / 0.45;
+    --input: 0 0% 100% / 0.45;
+    --ring: 270 40% 78%;
+    --radius: 1rem;
+
+    --bg-base: #0F172A;
+    --bg-section-alt: #0B1120;
+    --color-primary: #1E3A8A;
+    --color-accent: #38BDF8;
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(56, 189, 248, 0.12);
+    --text-dark: #E2E8F0;
+    --text-muted: #94A3B8;
+    --highlight: #8B5CF6;
+    --dark-footer: #080C17;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+/* Base page colour — prevents white edges where Spline iframe doesn't reach */
+html,
+body {
+  background-color: var(--bg-base);
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--bg-base);
+    overflow-x: hidden;
+  }
+}
+
+/* Fonts */
+.font-display {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.font-body {
+  font-family: 'DM Sans', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   GLASSMORPHISM — performance-optimised
+   
+   BEFORE: backdrop-filter: blur(16px) on every glass element.
+   This forced the browser to re-render and blur the entire 3D WebGL
+   background behind EACH glass card on EVERY scroll frame.
+   With 20+ glass elements, this was catastrophically expensive.
+
+   AFTER: Semi-transparent solid background with a subtle border glow.
+   Looks almost identical but costs almost nothing to composite.
+   ══════════════════════════════════════════════════════════════════════════ */
+.glass {
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.glass-dark {
+  background: rgba(11, 17, 32, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Float animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* Scroll indicator bob */
+@keyframes bob {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.animate-bob {
+  animation: bob 2s ease-in-out infinite;
+}
+
+/* Blob drift */
+@keyframes blob-drift {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+
+  50% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+
+  75% {
+    transform: translate(10px, -10px) scale(1.02);
+  }
+}
+
+.animate-blob {
+  animation: blob-drift 20s ease-in-out infinite;
+}
+
+.animate-blob-delay {
+  animation: blob-drift 25s ease-in-out infinite;
+  animation-delay: -7s;
+}
+
+.animate-blob-delay-2 {
+  animation: blob-drift 30s ease-in-out infinite;
+  animation-delay: -14s;
+}
+
+/* Orb drift for footer */
+@keyframes orb-drift {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  33% {
+    transform: translate(40px, -30px);
+  }
+
+  66% {
+    transform: translate(-30px, 20px);
+  }
+}
+
+.animate-orb {
+  animation: orb-drift 15s ease-in-out infinite;
+}
+
+/* Glow pulse for profile */
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 8px 40px rgba(56, 189, 248, 0.15);
+  }
+
+  50% {
+    box-shadow: 0 8px 60px rgba(56, 189, 248, 0.3);
+  }
+}
+
+/* Timeline node pulse */
+@keyframes node-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(139, 92, 246, 0);
+  }
+}
+
+.animate-node-pulse {
+  animation: node-pulse 2s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   NOISE OVERLAY — lightweight version
+   Uses a tiny repeating tile with contain:strict so the browser never
+   re-composites the entire viewport on scroll.
+   ══════════════════════════════════════════════════════════════════════════ */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.03;
+  z-index: 9999;
+  pointer-events: none;
+  contain: strict;
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BACKGROUND ANIMATION
+   ══════════════════════════════════════════════════════════════════════════ */
+@keyframes slow-pan {
+  0% { transform: scale(1.1) translate(0, 0); }
+  50% { transform: scale(1.15) translate(-1%, -1%); }
+  100% { transform: scale(1.1) translate(-2%, 0); }
+}
