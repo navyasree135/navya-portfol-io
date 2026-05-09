@@ -3,6 +3,8 @@ import { gsap } from "@/lib/gsapSetup";
 import { ExternalLink, Star } from "lucide-react";
 import astroD8Logo from "@/assets/Astro Date.png";
 import fixitLogo from "@/assets/Fixit_logo.png";
+import claimAiLogo from "@/assets/claim-ai-logo.png";
+
 
 const featured = {
   name: "FIXIT",
@@ -19,6 +21,19 @@ const featured = {
 };
 
 const projects = [
+  {
+    name: "Claim-AI – Generative AI Insurance Platform",
+    logo: claimAiLogo,
+    url: "https://github.com/navyasree135/Claim-AI-",
+    gradient: "linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%)",
+    bullets: [
+      "Developed a full-stack platform automating the insurance lifecycle with dual-role access for hospitals and insurers, powered by 4 autonomous AI agents on AWS Bedrock",
+      "Integrated RAG-based agents for real-time FHIR record validation and clinical-grade appeal letter generation, reducing manual processing time significantly",
+      "Built automated fraud scoring and adjudication pass-throughs with SES-integrated notification systems for seamless patient and provider communication",
+    ],
+    tools: ["Next.js", "AWS Bedrock", "Nova Pro", "RAG", "AWS SES", "FHIR", "TypeScript", "Tailwind CSS"],
+  },
+
   {
     name: "Astro Date – Astro Driven Dating App",
     logo: astroD8Logo,
